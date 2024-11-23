@@ -26,7 +26,7 @@
             </div>
   
             <div class="row mb-3">
-              <label for="comu_nomb" class="form-label">Nombre</label>
+              <label for="comu_nomb" class="form-label">Nombre :</label>
               <div class="input-group">
                 <div class="input-group-text">
                   <font-awesome-icon icon="building" />
@@ -42,13 +42,18 @@
             </div>
   
             <div class="row mb-3">
-              <label for="muni_codi" class="form-label">Municipio</label>
+              <label for="muni_codi" class="form-label">Municipio :</label>
               <div class="input-group">
                 <div class="input-group-text">
                   <font-awesome-icon icon="bank" />
                 </div>
-                <select class="form-select" v-model="comuna.muni_codi">
-                  <option v-for="municipio in municipios" :key="municipio.muni_codi" :value="municipio.muni_codi">
+                <select 
+                  class="form-select" 
+                  v-model="comuna.muni_codi">
+                  <option 
+                    v-for="municipio in municipios" 
+                    :key="municipio.muni_codi" 
+                    v-bind:value="municipio.muni_codi">
                     {{ municipio.muni_nomb }}
                   </option>
                 </select>
@@ -59,7 +64,6 @@
               <button class="btn btn-primary" type="submit">Actualizar</button>
               <button class="btn btn-secondary mx-2" @click="cancelar">Cancelar</button>
             </div>
-  
           </form>
         </div>
       </div>
@@ -86,9 +90,10 @@
       cancelar() {
         this.$router.push({ name: 'Comunas' });
       },
+  
       async updateComuna() {
         const res = await axios.put(
-          `http://127.0.0.1:8000/api/comunas/${this.comuna.comu_codi}`,
+          `http://127.0.0.1:8000/api/comunas/${this.comuna.comu_codi}`, 
           this.comuna
         );
   
@@ -104,10 +109,10 @@
         }
       },
     },
+  
     mounted() {
       this.comuna.comu_codi = this.$route.params.id;
-      axios
-        .get(`http://127.0.0.1:8000/api/comunas/${this.comuna.comu_codi}`)
+      axios.get(`http://127.0.0.1:8000/api/comunas/${this.comuna.comu_codi}`)
         .then((response) => {
           this.comuna = response.data.comuna;
           this.municipios = response.data.municipios;
